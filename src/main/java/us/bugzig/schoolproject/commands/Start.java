@@ -2,11 +2,16 @@ package us.bugzig.schoolproject.commands;
 
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -48,8 +53,24 @@ public class Start implements CommandExecutor {
         MobDisguise mobDisguise = new MobDisguise(DisguiseType.ENDERMAN);
         mobDisguise.setEntity(player);
         mobDisguise.startDisguise();
-        player.sendMessage("Disguise has been started successfully");
+        PlayerInventory inventory = player.getInventory();
+        ItemStack enderpearl = new ItemStack(Material.ENDER_PEARL, 1);
+        ItemStack stick = new ItemStack(Material.STICK, 1);
+        ItemMeta endermeta = enderpearl.getItemMeta();
+        ItemMeta stickmeta = stick.getItemMeta();
 
+        endermeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Teleport");
+        stickmeta.setDisplayName(ChatColor.BLUE + "Pick up Block");
+
+        inventory.clear();
+
+        enderpearl.setItemMeta(endermeta);
+        stick.setItemMeta(stickmeta);
+        inventory.setItem(3, enderpearl);
+        inventory.setItem(5, stick);
+
+
+        player.sendMessage("Disguise has been started successfully");
     }
 
 
