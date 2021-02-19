@@ -41,11 +41,13 @@ public class schoolproject extends JavaPlugin {
     }
 
     private void updateBoard(FastBoard board) {
+        board.updateTitle("Disguise Server");
         board.updateLines(
                 "",
                 "Online: " + getServer().getOnlinePlayers().size(),
                 "",
-                "You Are: " + DisguiseAPI.getDisguise(board.getPlayer())
+                "You Are: " + DisguiseAPI.getDisguise(board.getPlayer()).getDisguiseName(),
+                ""
         );
     }
 }
