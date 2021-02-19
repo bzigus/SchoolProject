@@ -1,0 +1,9 @@
+name: SchoolProject
+version: 1.0
+main: us.bugzig.schoolproject.schoolproject
+depend: [LibsDisguises,ProtocolLib]
+commands:
+  startdisguise:
+    description: Starts Diguise Plugin
+    usage: /startdisguise
+    permission: schoolproject.start
