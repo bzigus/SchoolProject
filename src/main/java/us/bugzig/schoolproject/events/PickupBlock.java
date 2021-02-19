@@ -34,20 +34,16 @@ public class PickupBlock implements Listener {
         if (timeLeft == 0) {
 
             if (player.getItemInHand().getType() != Material.STICK) {
-                player.sendMessage("Yo");
                 return;
             }
             if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                player.sendMessage("Yo1");
                 return;
             }
             if (!DisguiseAPI.isDisguised(player)) {
-                player.sendMessage("Yo2");
                 return;
             }
             Disguise disguise = DisguiseAPI.getDisguise(player);
             if (!disguise.getDisguiseName().equals("Enderman")) {
-                player.sendMessage("Yo3");
                 return;
             }
             EndermanWatcher watcher = (EndermanWatcher) disguise.getWatcher();
@@ -55,10 +51,11 @@ public class PickupBlock implements Listener {
 
             if (watcher.getItemInMainHand() == null) {
                 watcher.setItemInMainHand(player.getTargetBlock(null, 5).getType());
+                player.getTargetBlock(null, 5).setType(Material.AIR);
                 player.sendMessage("Pickup " + player.getTargetBlock(null, 5).getType());
                 disguise.setWatcher(watcher);
             } else if (watcher.getItemInMainHand() != null) {
-                Bukkit.getServer().getWorld(player.getWorld().getName()).getBlockAt(player.getTargetBlock(null, 5).getLocation().add(0,1,0)).setType(watcher.getItemInMainHand().getType());
+                player.getTargetBlock(null, 5).getLocation().add(0,1,0).getBlock().setType(watcher.getItemInMainHand().getType());
 
                 watcher.setItemInMainHand((Material) null);
                 disguise.setWatcher(watcher);

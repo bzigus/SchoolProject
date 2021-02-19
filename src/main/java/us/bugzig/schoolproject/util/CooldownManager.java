@@ -7,7 +7,7 @@ import java.util.UUID;
 public class CooldownManager {
     private final Map<UUID, Integer> cooldowns = new HashMap<>();
 
-    public static final int DEFAULT_COOLDOWN = 5;
+    public static final int DEFAULT_COOLDOWN = 1;
 
     public void setCooldown(UUID player, int time){
         if(time < 1) {

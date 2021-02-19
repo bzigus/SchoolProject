@@ -28,20 +28,18 @@ public class Teleport implements Listener {
 
     @EventHandler
     public void onPlayerRightClick(PlayerInteractEvent event) {
-
         Player player = event.getPlayer();
         int timeLeft = cooldownManager.getCooldown(player.getUniqueId());
         if (timeLeft == 0) {
 
             //Checks of Enderpearl, rightclick event & isdisguised
             if (player.getItemInHand().getType() != Material.ENDER_PEARL) {
-                player.sendMessage("nope");
                 return;
             }
-            if (!event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-                player.sendMessage("ya no");
+            if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || !event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
                 return;
             }
+
             if (!DisguiseAPI.isDisguised(player)) {
                 return;
             }
