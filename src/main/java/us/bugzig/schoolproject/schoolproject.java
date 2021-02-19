@@ -2,12 +2,12 @@ package us.bugzig.schoolproject;
 
 import fr.mrmicky.fastboard.FastBoard;
 import me.libraryaddict.disguise.DisguiseAPI;
-import org.bukkit.Statistic;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.bugzig.schoolproject.commands.Start;
 import us.bugzig.schoolproject.events.PickupBlock;
 import us.bugzig.schoolproject.events.Scoreboard;
 import us.bugzig.schoolproject.events.Teleport;
+import us.bugzig.schoolproject.util.TabComplete;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,13 +27,13 @@ public class schoolproject extends JavaPlugin {
                 updateBoard(board);
             }
         }, 0, 20);
+        getCommand("startdisguise").setTabCompleter(new TabComplete());
 
 
         //Events
         getServer().getPluginManager().registerEvents(new Teleport(this), this);
         getServer().getPluginManager().registerEvents(new PickupBlock(this), this);
         getServer().getPluginManager().registerEvents(new Scoreboard(this), this);
-
 
     }
     @Override

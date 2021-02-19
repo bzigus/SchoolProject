@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -15,17 +16,21 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.List;
+
 public class Start implements CommandExecutor {
+
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         Player player = (Player) sender;
-        if (args[0].equals("bat")) {
-            dBat(player);
-        } else if (args[0].equals("enderman")) {
-            dEnderman(player);
-        } else if (args[0].equals("villager")) {
-            dVillager(player);
+        if (args.length == 1) {
+            if (args[0].equals("bat")) {
+                dBat(player);
+            } else if (args[0].equals("enderman")) {
+                dEnderman(player);
+            } else if (args[0].equals("villager")) {
+                dVillager(player);
+            }
         }
-
         else {
 
             player.sendMessage("Please use a name of an animal: Bat, Enderman, Villager");
