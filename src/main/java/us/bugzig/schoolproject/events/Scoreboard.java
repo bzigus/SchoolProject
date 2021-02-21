@@ -42,14 +42,5 @@ public class Scoreboard implements Listener {
         }
     }
 
-    private void updateBoard(FastBoard board) {
-        board.updateLines(
-                "",
-                "Online: " + plugin.getServer().getOnlinePlayers().size(),
-                "",
-                "Kills: " + board.getPlayer().getStatistic(Statistic.PLAYER_KILLS),
-                ""
-        );
-    }
 
 }

@@ -1,6 +1,6 @@
-name: SchoolProject
-version: 1.0
-main: us.bugzig.schoolproject.schoolproject
+name: ${project.name}
+version: ${project.version}
+main: ${project.groupId}.${project.artifactId}.schoolproject
 depend: [LibsDisguises,ProtocolLib]
 commands:
   startdisguise:

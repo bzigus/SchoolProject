@@ -27,8 +27,10 @@ public class Start implements CommandExecutor {
                 dBat(player);
             } else if (args[0].equals("enderman")) {
                 dEnderman(player);
+                player.setAllowFlight(false);
             } else if (args[0].equals("villager")) {
                 dVillager(player);
+                player.setAllowFlight(false);
             }
         }
         else {
