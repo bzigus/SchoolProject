@@ -32,51 +32,76 @@ public class PickupBlock implements Listener {
         Player player = event.getPlayer();
         int timeLeft = cooldownManager.getCooldown(player.getUniqueId());
         if (timeLeft == 0) {
+            if (checks(event, player)) {
 
-            if (player.getItemInHand().getType() != Material.STICK) {
-                return;
-            }
-            if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                return;
-            }
-            if (!DisguiseAPI.isDisguised(player)) {
-                return;
-            }
-            Disguise disguise = DisguiseAPI.getDisguise(player);
-            if (!disguise.getDisguiseName().equals("Enderman")) {
-                return;
-            }
-            EndermanWatcher watcher = (EndermanWatcher) disguise.getWatcher();
-            player.sendMessage("Set " + watcher.getItemInMainHand());
+                Disguise disguise = DisguiseAPI.getDisguise(player);
+                EndermanWatcher watcher = (EndermanWatcher) disguise.getWatcher();
 
-            if (watcher.getItemInMainHand() == null) {
-                watcher.setItemInMainHand(player.getTargetBlock(null, 5).getType());
-                player.getTargetBlock(null, 5).setType(Material.AIR);
-                player.sendMessage("Pickup " + player.getTargetBlock(null, 5).getType());
-                disguise.setWatcher(watcher);
-            } else if (watcher.getItemInMainHand() != null) {
-                player.getTargetBlock(null, 5).getLocation().add(0,1,0).getBlock().setType(watcher.getItemInMainHand().getType());
+                if (watcher.getItemInMainHand() == null) {
+                    setHand(watcher, player, disguise);
+                } else if (watcher.getItemInMainHand() != null) {
 
-                watcher.setItemInMainHand((Material) null);
-                disguise.setWatcher(watcher);
+                    setBlock(watcher, player, disguise);
 
-            }
-
-            cooldownManager.setCooldown(player.getUniqueId(), CooldownManager.DEFAULT_COOLDOWN);
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    int timeLeft = cooldownManager.getCooldown(player.getUniqueId());
-                    cooldownManager.setCooldown(player.getUniqueId(), --timeLeft);
-                    if (timeLeft == 0) {
-                        this.cancel();
-                    }
                 }
-            }.runTaskTimer(plugin, 20, 20);
+
+                setTimer(player);
+            }
+
+
         } else {
             player.sendMessage(ChatColor.RED.toString() + timeLeft + " seconds before you can use this feature again.");
         }
 
+
+    }
+
+    //Checks for player info
+    private boolean checks (PlayerInteractEvent event, Player player) {
+        Disguise disguise = DisguiseAPI.getDisguise(player);
+        if (player.getItemInHand().getType() == Material.STICK) {
+            if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                if (DisguiseAPI.isDisguised(player)) {
+                    if (disguise.getDisguiseName().equals("Enderman")) {
+                        return true;
+                    } else { return false; }
+                } else { return false; }
+            } else { return false; }
+        } else { return false; }
+
+    }
+
+    private void setHand (EndermanWatcher watcher, Player player, Disguise disguise) {
+
+        watcher.setItemInMainHand(player.getTargetBlock(null, 5).getType());
+        player.getTargetBlock(null, 5).setType(Material.AIR);
+        player.sendMessage("Picked up " + player.getTargetBlock(null, 5).getType());
+        disguise.setWatcher(watcher);
+
+    }
+    private void setBlock (EndermanWatcher watcher, Player player, Disguise disguise) {
+
+        player.getTargetBlock(null, 5).getLocation().add(0, 1, 0).getBlock().setType(watcher.getItemInMainHand().getType());
+
+        watcher.setItemInMainHand((Material) null);
+        disguise.setWatcher(watcher);
+
+    }
+
+    //Sets Timer
+    private void setTimer (Player player) {
+
+        cooldownManager.setCooldown(player.getUniqueId(), CooldownManager.DEFAULT_COOLDOWN);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                int timeLeft = cooldownManager.getCooldown(player.getUniqueId());
+                cooldownManager.setCooldown(player.getUniqueId(), --timeLeft);
+                if (timeLeft == 0) {
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(plugin, 20, 20);
 
     }
 
