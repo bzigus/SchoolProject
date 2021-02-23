@@ -40,15 +40,10 @@ public class PickupBlock implements Listener {
                 if (watcher.getItemInMainHand() == null) {
                     setHand(watcher, player, disguise);
                 } else if (watcher.getItemInMainHand() != null) {
-
                     setBlock(watcher, player, disguise);
-
                 }
-
-                setTimer(player);
+                cooldownManager.setTimer(player, plugin, 2);
             }
-
-
         } else {
             player.sendMessage(ChatColor.RED.toString() + timeLeft + " seconds before you can use this feature again.");
         }
@@ -88,21 +83,6 @@ public class PickupBlock implements Listener {
 
     }
 
-    //Sets Timer
-    private void setTimer (Player player) {
 
-        cooldownManager.setCooldown(player.getUniqueId(), CooldownManager.DEFAULT_COOLDOWN);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                int timeLeft = cooldownManager.getCooldown(player.getUniqueId());
-                cooldownManager.setCooldown(player.getUniqueId(), --timeLeft);
-                if (timeLeft == 0) {
-                    this.cancel();
-                }
-            }
-        }.runTaskTimer(plugin, 20, 20);
-
-    }
 
 }
