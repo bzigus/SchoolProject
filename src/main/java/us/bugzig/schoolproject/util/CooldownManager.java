@@ -30,20 +30,15 @@ public class CooldownManager {
     public void setTimer (Player player, Plugin plugin, int time) {
 
         setCooldown(player.getUniqueId(), time);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                int timeLeft = getCooldown(player.getUniqueId());
-                setCooldown(player.getUniqueId(), --timeLeft);
-                if (timeLeft == 0) {
-                    this.cancel();
-                }
-            }
-        }.runTaskTimer(plugin, 20, 20);
+        run(player, plugin);
     }
     public void setTimer (Player player, Plugin plugin) {
 
         setCooldown(player.getUniqueId(), DEFAULT_COOLDOWN);
+        run(player, plugin);
+    }
+
+    private void run (Player player, Plugin plugin) {
         new BukkitRunnable() {
             @Override
             public void run() {

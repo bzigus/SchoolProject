@@ -32,20 +32,7 @@ public class Teleport implements Listener {
         if (timeLeft == 0) {
 
             //Checks of Enderpearl, rightclick event & isdisguised
-            if (player.getItemInHand().getType() != Material.ENDER_PEARL) {
-                return;
-            }
-            if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || !event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-                return;
-            }
 
-            if (!DisguiseAPI.isDisguised(player)) {
-                return;
-            }
-
-            if (!DisguiseAPI.getDisguise(player).getDisguiseName().equals("Enderman")) {
-                return;
-            }
 
 
             //Stops Enderpearl from throwing
@@ -71,6 +58,19 @@ public class Teleport implements Listener {
         } else {
             player.sendMessage(ChatColor.RED.toString() + timeLeft + " seconds before you can use this feature again.");
         }
+    }
+
+    private boolean check (Player player, PlayerInteractEvent event) {
+
+        if (player.getItemInHand().getType() != Material.ENDER_PEARL) {
+            if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                if (DisguiseAPI.isDisguised(player)) {
+                    if (DisguiseAPI.getDisguise(player).getDisguiseName().equals("Enderman")) {
+                        return true;
+                    } else { return false; }
+                } else { return false; }
+            } else { return false; }
+        } else { return false; }
     }
 
 }

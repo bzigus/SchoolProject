@@ -22,6 +22,14 @@ public class Start implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         Player player = (Player) sender;
+
+        startCmd(player, args);
+
+        return true;
+    }
+
+    public void startCmd (Player player, String[] args) {
+
         if (args.length == 1) {
             if (args[0].equals("bat")) {
                 dBat(player);
@@ -34,12 +42,9 @@ public class Start implements CommandExecutor {
             }
         }
         else {
-
             player.sendMessage("Please use a name of an animal: Bat, Enderman, Villager");
-
         }
 
-        return true;
     }
 
     public void dBat (Player player) {
